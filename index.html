@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgicGZ</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+    body { background: #121212; color: white; overflow-x: hidden; }
+    header {
+      background: #000;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header img.logo {
+      height: 40px;
+    }
+    .search-container {
+      flex: 1;
+      margin: 0 20px;
+      position: relative;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      background: #222;
+      color: white;
+    }
+    .search-container input::placeholder {
+      color: #888;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .nav-buttons button {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .games-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      justify-content: center;
+    }
+    .game {
+      position: relative;
+      width: 200px;
+      height: 120px;
+      border-radius: 15px;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      border: 3px solid transparent;
+      box-shadow: 0 0 0px transparent;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .game:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(128, 0, 128, 0.7);
+      border-color: rgba(128, 0, 128, 0.8);
+    }
+    .favorite-btn {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 5px;
+      display: none;
+      cursor: pointer;
+      z-index: 5;
+    }
+    .game:hover .favorite-btn {
+      display: block;
+    }
+    .favorite-btn.favorited {
+      color: yellow;
+    }
+    #game-view {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #000;
+      z-index: 1000;
+      flex-direction: column;
+    }
+    #game-frame {
+      flex: 1;
+      border: none;
+      width: 100%;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 10px;
+      background: black;
+      color: white;
+      height: 40px;
+    }
+    .top-bar img {
+      height: 30px;
+    }
+    .top-bar h2 {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+    }
+    .top-bar button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+    }
+    .top-bar .fullscreen-btn {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://example.com/logo.png" class="logo" alt="Logo" />
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Search..." />
+  </div>
+  <div class="nav-buttons">
+    <button onclick="showAllGames()">All Games</button>
+    <button onclick="showFavorites()">★ Favorites</button>
+  </div>
+</header>
+
+<div class="games-container" id="gamesContainer"></div>
+
+<div id="game-view">
+  <div class="top-bar">
+    <div style="display: flex; align-items: center;">
+      <img src="https://example.com/logo.png" />
+    </div>
+    <h2 id="gameTitle"></h2>
+    <div>
+      <button class="fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()">⛶</button>
+      <button onclick="closeGame()">✕</button>
+    </div>
+  </div>
+  <iframe id="game-frame"></iframe>
+</div>
+
+<script>
+  const games = [
+    {
+      name: "Pac-Man",
+      image: "https://upload.wikimedia.org/wikipedia/en/5/59/Pac-man.png",
+      link: "https://example.com/pacman"
+    },
+    {
+      name: "Tetris",
+      image: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Tetris_1986_video_game_logo.png",
+      link: "https://example.com/tetris"
+    },
+    {
+      name: "Snake",
+      image: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Nokia_snake_game.png",
+      link: "https://example.com/snake"
+    }
+  ];
+
+  const gamesContainer = document.getElementById("gamesContainer");
+  const searchInput = document.getElementById("search");
+  const gameView = document.getElementById("game-view");
+  const gameFrame = document.getElementById("game-frame");
+  const gameTitle = document.getElementById("gameTitle");
+  const fullscreenBtn = document.getElementById("fullscreenBtn");
+
+  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+  function renderGames(list) {
+    list.sort((a, b) => a.name.localeCompare(b.name));
+    gamesContainer.innerHTML = "";
+    list.forEach(game => {
+      const div = document.createElement("div");
+      div.className = "game";
+      div.style.backgroundImage = `url('${game.image}')`;
+      div.onclick = () => openGame(game);
+      const favBtn = document.createElement("button");
+      favBtn.className = "favorite-btn";
+      favBtn.innerHTML = "★";
+      if (favorites.some(f => f.name === game.name)) {
+        favBtn.classList.add("favorited");
+      }
+      favBtn.onclick = e => {
+        e.stopPropagation();
+        toggleFavorite(game, favBtn);
+      };
+      div.appendChild(favBtn);
+      gamesContainer.appendChild(div);
+    });
+  }
+
+  function toggleFavorite(game, btn) {
+    const index = favorites.findIndex(f => f.name === game.name);
+    if (index >= 0) {
+      favorites.splice(index, 1);
+      btn.classList.remove("favorited");
+    } else {
+      favorites.push(game);
+      btn.classList.add("favorited");
+    }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }
+
+  function showAllGames() {
+    renderGames(games);
+  }
+
+  function showFavorites() {
+    renderGames(favorites);
+  }
+
+  function openGame(game) {
+    gameFrame.src = game.link;
+    gameTitle.textContent = game.name;
+    gameView.style.display = "flex";
+  }
+
+  function closeGame() {
+    gameView.style.display = "none";
+    gameFrame.src = "";
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+    fullscreenBtn.innerText = "⛶";
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      gameView.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  document.addEventListener("fullscreenchange", () => {
+    if (document.fullscreenElement) {
+      fullscreenBtn.innerText = "🡽";
+    } else {
+      fullscreenBtn.innerText = "⛶";
+    }
+  });
+
+  searchInput.addEventListener("input", () => {
+    const term = searchInput.value.toLowerCase();
+    const filtered = games.filter(g => g.name.toLowerCase().includes(term));
+    const showingFavorites = gamesContainer.innerHTML.includes("favorited");
+    renderGames(showingFavorites ? favorites.filter(g => g.name.toLowerCase().includes(term)) : filtered);
+  });
+
+  showAllGames();
+</script>
+
+</body>
+</html>
