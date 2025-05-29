@@ -167,51 +167,74 @@
 </div>
 
 <script>
+  const BASE_URLS = {
+    base1: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles384207-1/", active: true },
+    base2: { url: "https://mragic.github.io/AgicV1/", active: true },
+    base3: { url: "https://mragic.github.io/project/", active: false },
+    base4: { url: "https://mragic.github.io/projects/", active: false },
+    base5: { url: "https://mragic.github.io/project/", active: false },
+    base6: { url: "https://mragic.github.io/project/", active: false },
+    base7: { url: "https://mragic.github.io/project/", active: false },
+    base8: { url: "https://mragic.github.io/project/", active: false },
+    base9: { url: "https://mragic.github.io/project/", active: false },
+    base10: { url: "https://mragic.github.io/project/", active: false },
+    base11: { url: "https://mragic.github.io/project/", active: false },
+    base12: { url: "https://mragic.github.io/project/", active: false },
+    base13: { url: "https://mragic.github.io/project/", active: false },
+    base14: { url: "https://mragic.github.io/project/", active: false },
+    base15: { url: "https://mragic.github.io/project/", active: false },
+    base16: { url: "https://mragic.github.io/project/", active: false },
+    base17: { url: "https://mragic.github.io/project/", active: false },
+    base18: { url: "https://mragic.github.io/project/", active: false },
+    base19: { url: "https://mragic.github.io/project/", active: false },
+    base20: { url: "https://mragic.github.io/project/", active: false }
+  };
+
   const games = [
     {
       name: "Cookie Clicker",
       image: "https://github.com/mragic/Agic/blob/main/Images/cookieclicker.jpeg?raw=true",
-      link: "https://mragic.github.io/gfile/cookieclicker/"
+      path: "cookieclicker/"
     },
     {
       name: "Doge Miner",
       image: "https://github.com/mragic/Agic/blob/main/Images/dogeminer.png?raw=true",
-      link: "https://mragic.github.io/gfile/DogeMiner/"
+      path: "DogeMiner/"
     },
     {
       name: "Flappy Bird",
       image: "https://github.com/mragic/Agic/blob/main/Images/Flappybird.jpg?raw=true",
-      link: "https://mragic.github.io/gfile/flappy/"
+      path: "flappy/"
     },
     {
       name: "2048",
       image: "https://github.com/mragic/Agic/blob/main/Images/2048.jpg?raw=true",
-      link: "https://mragic.github.io/gfile/2048/"
+      path: "2048/"
     },
     {
       name: "Five Nights at Freddy's 4",
       image: "https://github.com/mragic/Agic/blob/main/Images/FNAF4.png?raw=true",
-      link: "https://mragic.github.io/gfile/FNAF4/"
+      path: "FNAF4/"
     },
     {
       name: "Basketball Stars",
       image: "https://github.com/mragic/Agic/blob/main/Images/BasketballStars.jpeg?raw=true",
-      link: "https://mragic.github.io/gfile/basketball-stars/"
+      path: "basketball-stars/"
     },
     {
       name: "Doodle Jump",
       image: "https://github.com/mragic/Agic/blob/main/Images/doodlejump.jpg?raw=true",
-      link: "https://mragic.github.io/gfile/doodle/"
+      path: "doodle/"
     },
     {
       name: "Slope",
       image: "https://github.com/mragic/Agic/blob/main/Images/slope.jpg?raw=true",
-      link: "https://mragic.github.io/gfile/slope/"
+      path: "slope/"
     },
     {
       name: "Snake",
       image: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Nokia_snake_game.png",
-      link: "https://example.com/snake"
+      path: "https://example.com/snake"
     }
   ];
 
@@ -267,9 +290,35 @@
     renderGames(favorites);
   }
 
-  function openGame(game) {
-    gameFrame.src = game.link;
-    gameTitle.textContent = game.name;
+  async function openGame(game) {
+    if (game.link) {
+      launchGame(game.link, game.name);
+      return;
+    }
+
+    const activeBases = Object.values(BASE_URLS)
+      .filter(base => base.active)
+      .map(base => base.url);
+
+    for (const base of activeBases) {
+      const fullUrl = base + game.path;
+      try {
+        const response = await fetch(fullUrl, { method: 'HEAD' });
+        if (response.ok) {
+          launchGame(fullUrl, game.name);
+          return;
+        }
+      } catch (e) {
+        console.warn(`Failed to load from: ${fullUrl}`);
+      }
+    }
+
+    alert(`Could not load "${game.name}"`);
+  }
+
+  function launchGame(url, title) {
+    gameFrame.src = url;
+    gameTitle.textContent = title;
     gameView.style.display = "flex";
   }
 
@@ -291,11 +340,7 @@
   }
 
   document.addEventListener("fullscreenchange", () => {
-    if (document.fullscreenElement) {
-      fullscreenBtn.innerText = "🡽";
-    } else {
-      fullscreenBtn.innerText = "⛶";
-    }
+    fullscreenBtn.innerText = document.fullscreenElement ? "🡽" : "⛶";
   });
 
   searchInput.addEventListener("input", () => {
@@ -307,6 +352,3 @@
 
   showAllGames();
 </script>
-
-</body>
-</html>
