@@ -190,478 +190,102 @@
     base20: { url: "https://mragic.github.io/project/", active: false }
   };
 
-  const games = [
-    {
-      name: "Cookie Clicker",
-      image: "https://github.com/mragic/Agic/blob/main/Images/cookieclicker.jpeg?raw=true",
-      path: "cookieclicker/"
-    },
-    {
-      name: "Doge Miner",
-      image: "https://github.com/mragic/Agic/blob/main/Images/dogeminer.png?raw=true",
-      path: "DogeMiner/"
-    },
-    {
-      name: "Flappy Bird",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Flappybird.jpg?raw=true",
-      path: "flappy/"
-    },
-    {
-      name: "2048",
-      image: "https://github.com/mragic/Agic/blob/main/Images/2048.jpg?raw=true",
-      path: "2048/"
-    },
-    {
-      name: "Five Nights at Freddy's 4",
-      image: "https://github.com/mragic/Agic/blob/main/Images/FNAFS4.png?raw=true",
-      path: "FNAF4/"
-    },
-    {
-      name: "Basketball Stars",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BasketballStars.jpeg?raw=true",
-      path: "basketball-stars/"
-    },
-    {
-      name: "Doodle Jump",
-      image: "https://github.com/mragic/Agic/blob/main/Images/doodlejump.jpg?raw=true",
-      path: "doodle/"
-    },
-    {
-      name: "Slope",
-      image: "https://github.com/mragic/Agic/blob/main/Images/slope.jpg?raw=true",
-      path: "slope/"
-    },
-    {
-      name: "AdVenture Capitalist",
-      image: "https://github.com/mragic/Agic/blob/main/Images/AdVentureCapitalist.jpg?raw=true",
-      path: "adcap/"
-    },
-    {
-      name: "A Dance Of Fire And Ice",
-      image: "https://github.com/mragic/Agic/blob/main/Images/ADanceOfFireAndIce.jpg?raw=true",
-      path: "adofai/"
-    },
-    {
-      name: "Baldi's Basics in Education and Learning",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BaldisBasics.png?raw=true",
-      path: "baldi/"
-    },
-    {
-      name: "Burrito Bison",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BurritoBison.jpg?raw=true",
-      path: "bison/"
-    },
-    {
-      name: "Twitch Tetris",
-      image: "https://github.com/mragic/Agic/blob/main/Images/TwitchTetris.png?raw=true",
-      path: "tetris/"
-    },
-    {
-      name: "BitLife",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BitLife.png?raw=true",
-      path: "bitlife/"
-    },
-    {
-      name: "Boxing Physics 2",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BoxingPhysics2.jpg?raw=true",
-      path: "boxing-physics2/"
-    },
-    {
-      name: "BreakLock",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BreakLock.jpg?raw=true",
-      path: "breaklock/"
-    },
-    {
-      name: "Burger & Frights",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Burger&Frights.png?raw=true",
-      path: "burger/"
-    },
-    {
-      name: "Cell To Singularity",
-      image: "https://github.com/mragic/Agic/blob/main/Images/CellToSingularity.jpg?raw=true",
-      path: "cell/"
-    },
-    {
-      name: "Chrome Dino",
-      image: "https://github.com/mragic/Agic/blob/main/Images/ChromeDIno.png?raw=true",
-      path: "chrome-dino/"
-    },
-    {
-      name: "Sort The Court",
-      image: "https://github.com/mragic/Agic/blob/main/Images/SortTheCourt.jpg?raw=true",
-      path: "court/"
-    },
-    {
-      name: "Crossy Road",
-      image: "https://github.com/mragic/Agic/blob/main/Images/CrossyRoad.png?raw=true",
-      path: "crossy/"
-    },
-    {
-      name: "Fruit Ninja",
-      image: "https://github.com/mragic/Agic/blob/main/Images/FruitNinja.jpg?raw=true",
-      path: "fruitninja/"
-    },
-    {
-      name: "Doodle God",
-      image: "https://github.com/mragic/Agic/blob/main/Images/DoodleGod.jpg?raw=true",
-      path: "fruitninja/"
-    },
-    {
-      name: "Dreader",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Dreader.png?raw=true",
-      path: "dreader/"
-    },
-    {
-      name: "Exhibit Of Sorrows",
-      image: "https://github.com/mragic/Agic/blob/main/Images/ExhibitOfSorrows.png?raw=true",
-      path: "exhibit/"
-    },
-    {
-      name: "Friday Night Funkin´",
-      image: "https://github.com/mragic/Agic/blob/main/Images/FridayNightFunkin.png?raw=true",
-      path: "fnf-w7/"
-    },
-    {
-      name: "Papa's Freezeria",
-      image: "https://github.com/mragic/Agic/blob/main/Images/PapasFreezeria.jpg?raw=true",
-      path: "freezeria/"
-    },
-    {
-      name: "Friendly Fire",
-      image: "https://github.com/mragic/Agic/blob/main/Images/FriendlyFire.jpg?raw=true",
-      path: "friendlyfire/"
-    },
-    {
-      name: "Game Inside A Game",
-      image: "https://github.com/mragic/Agic/blob/main/Images/GameInsideAGame.jpg?raw=true",
-      path: "game-inside/"
-    },
-    {
-      name: "George And The Printer",
-      image: "https://github.com/mragic/Agic/blob/main/Images/GeorgeAndThePrinter.jpg?raw=true",
-      path: "dreader/"
-    },
-    {
-      name: "Getaway Shootout",
-      image: "https://github.com/mragic/Agic/blob/main/Images/%20GetawayShootout.jpg?raw=true",
-      path: "getaway-shootout/"
-    },
-    {
-      name: "Grey-Box Tesing",
-      image: "https://github.com/mragic/Agic/blob/main/Images/GreyBoxTesting.jpg?raw=true",
-      path: "greybox/"
-    },
-    {
-      name: "Happy Wheels",
-      image: "https://github.com/mragic/Agic/blob/main/Images/HappyWheels.png?raw=true",
-      path: "580301-HappyWheels/"
-    },
-    {
-      name: "Papa's Hot Doggeria",
-      image: "https://github.com/mragic/Agic/blob/main/Images/PapasHotDoggeria.jpg?raw=true",
-      path: "hotdoggeria/"
-    },
-    {
-      name: "Jetpack Joyride",
-      image: "https://github.com/mragic/Agic/blob/main/Images/JetpackJoyride.png?raw=true",
-      path: "jetpackjoyride/"
-    },
-    {
-      name: "Knife Hit",
-      image: "https://github.com/mragic/Agic/blob/main/Images/KnifeHit.png?raw=true",
-      path: "knifehit/"
-    },
-    {
-      name: "Apple Knight",
-      image: "https://github.com/mragic/Agic/blob/main/Images/AppleKnight.jpg?raw=true",
-      path: "knight/"
-    },
-    {
-      name: "Lose95",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Lose95.png?raw=true",
-      path: "lose95/"
-    },
-    {
-      name: "Papa Louie",
-      image: "https://github.com/mragic/Agic/blob/main/Images/PapaLouie.jpeg?raw=true",
-      path: "louie/"
-    },
-    {
-      name: "Super Mario Bros. Versus",
-      image: "https://github.com/mragic/Agic/blob/main/Images/SuperMarioBrosVersus.jpg?raw=true",
-      path: "dreader/"
-    },
-    {
-      name: "Minecraft Beta 0.30",
-      image: "https://github.com/mragic/Agic/blob/main/Images/MinecraftBeta0.30.png?raw=true",
-      path: "mcbeta0.30/"
-    },
-    {
-      name: "The Open House",
-      image: "https://github.com/mragic/Agic/blob/main/Images/TheOpenHouse.jpg?raw=true",
-      path: "open/"
-    },
-    {
-      name: "Papa's Burgeria",
-      image: "https://github.com/mragic/Agic/blob/main/Images/PapasBurgeria.jpg?raw=true",
-      path: "papasb/"
-    },
-    {
-      name: "Papa's Pizzeria",
-      image: "https://github.com/mragic/Agic/blob/main/Images/PapasPizzeria.jpg?raw=true",
-      path: "pizzeria/"
-    },
-    {
-      name: "Portaboy",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Portaboy.jpg?raw=true",
-      path: "portaboy/"
-    },
-    {
-      name: "Pressing Under Pressure",
-      image: "https://github.com/mragic/Agic/blob/main/Images/PressingUnderPressure.jpg?raw=true",
-      path: "pressing/"
-    },
-    {
-      name: "Retro Bowl",
-      image: "https://github.com/mragic/Agic/blob/main/Images/RetroBowl.jpg?raw=true",
-      path: "retro-bowl/"
-    },
-    {
-      name: "Robogo",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Robogo.png?raw=true",
-      path: "robogo/"
-    },
-    {
-      name: "Run 3",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Run3.png?raw=true",
-      path: "run3/"
-    },
-    {
-      name: "Bad Time Simulator (Sans Fight)",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BadTimeSimulator.png?raw=true",
-      path: "sansfight/"
-    },
-    {
-      name: "Sketchbook",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Sketchbook.jpg?raw=true",
-      path: "sketchbook/"
-    },
-    {
-      name: "Super Mario 64",
-      image: "https://github.com/mragic/Agic/blob/main/Images/SuperMario64.jpg?raw=true",
-      path: "sm64/"
-    },
-    {
-      name: "Snake",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Snake.png?raw=true",
-      path: "snake/"
-    },
-    {
-      name: "Superhot",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Superhot.png?raw=true",
-      path: "superhot/"
-    },
-    {
-      name: "Deepest Sword",
-      image: "https://github.com/mragic/Agic/blob/main/Images/DeepestSword.jpg?raw=true",
-      path: "sword/"
-    },
-    {
-      name: "Papa's Taco Mia",
-      image: "https://github.com/mragic/Agic/blob/main/Images/PapasTacoMia.png?raw=true",
-      path: "tacomia/"
-    },
-    {
-      name: "Tunnel Rush",
-      image: "https://github.com/mragic/Agic/blob/main/Images/TunnelRush.png?raw=true",
-      path: "tunnelrush/"
-    },
-    {
-      name: "We Become What We Behold",
-      image: "https://github.com/mragic/Agic/blob/main/Images/WeBecomeWhatWeBehold.jpg?raw=true",
-      path: "wbwwb/"
-    },
-    {
-      name: "Wordle Unlimited",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Wordle.png?raw=true",
-      path: "wordle/"
-    },
-    {
-      name: "Wounded Summer",
-      image: "https://github.com/mragic/Agic/blob/main/Images/WoundedSummer.png?raw=true",
-      path: "wounded-summer/"
-    },
-    {
-      name: "Xx142-b2exe",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Xx142-b2exe.png?raw=true",
-      path: "xx142-b2exe/"
-    },
-    {
-      name: "Among Us",
-      image: "https://github.com/mragic/Agic/blob/main/Images/AmongUs.jpg?raw=true",
-      path: "amongus/"
-    },
-    {
-      name: "Block Blast",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BlockBlast.png?raw=true",
-      path: "blockblast/"
-    },
-    {
-      name: "Big Tower Tiny Square",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BigTowerTinySquare.png?raw=true",
-      path: "bigtowertinysquare/"
-    },
-    {
-      name: "Blumgi Slime",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BlumjiSlime.jpg?raw=true",
-      path: "blumgislime/"
-    },
-    {
-      name: "Box Chase",
-      image: "https://github.com/mragic/Agic/blob/main/Images/BoxChase.png?raw=true",
-      path: "boxchase/"
-    },
-    {
-      name: "Capybara Clicker",
-      image: "https://github.com/mragic/Agic/blob/main/Images/CapybaraClicker.png?raw=true",
-      path: "capybaraclicker/"
-    },
-    {
-      name: "CCMMYY",
-      image: "https://github.com/mragic/Agic/blob/main/Images/CCMMYY.png?raw=true",
-      path: "ccmmyy/"
-    },
-    {
-      name: "Impossible Cookie Clicker",
-      image: "https://github.com/mragic/Agic/blob/main/Images/ImpossibleCookieClicker.png?raw=true",
-      path: "impossiblecookieclicker/"
-    },
-    {
-      name: "Breakout",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Breakout.png?raw=true",
-      path: "breakout/"
-    },
-    {
-      name: "Checkers",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Checkers.png?raw=true",
-      path: "checkers/"
-    },
-    {
-      name: "Chess",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Chess.png?raw=true",
-      path: "chess/"
-    },
-    {
-      name: "Cluster Rush",
-      image: "https://github.com/mragic/Agic/blob/main/Images/ClusterRush.jpg?raw=true",
-      path: "clusterrush/"
-    },
-    {
-      name: "Cut The Rope",
-      image: "https://github.com/mragic/Agic/blob/main/Images/CutTheRope.png?raw=true",
-      path: "cuttherope/"
-    },
-    {
-      name: "Deadly Descent",
-      image: "https://github.com/mragic/Agic/blob/main/Images/DeadlyDescent.png?raw=true",
-      path: "deadlydescent/"
-    },
-    {
-      name: "Doge Miner 2",
-      image: "https://github.com/mragic/Agic/blob/main/Images/DogeMiner2.png?raw=true",
-      path: "dogeminer2/"
-    },
-    {
-      name: "Eggy Car",
-      image: "https://github.com/mragic/Agic/blob/main/Images/EggyCar.png?raw=true",
-      path: "eggycar/"
-    },
-    {
-      name: "Getting Over It",
-      image: "https://github.com/mragic/Agic/blob/main/Images/GettingOverIt.png?raw=true",
-      path: "gettingoveritscratch/"
-    },
-    {
-      name: "Gladihoppers",
-      image: "https://github.com/mragic/Agic/blob/main/Images/GladiHoppers.png?raw=true",
-      path: "gladihoppers/"
-    },
-    {
-      name: "Google Baseball",
-      image: "https://github.com/mragic/Agic/blob/main/Images/GoogleBaseball.jpeg?raw=true",
-      path: "googlebaseball/"
-    },
-    {
-      name: "Five Nights at Freddy's 2",
-      image: "https://github.com/mragic/Agic/blob/main/Images/FNAF2.png?raw=true",
-      path: "fnaf2/"
-    },
-    {
-      name: "Drive Mad",
-      image: "https://github.com/mragic/Agic/blob/main/Images/DriveMad.png?raw=true",
-      path: "drivemad/"
-    },
-    {
-      name: "Drift Boss",
-      image: "https://github.com/mragic/Agic/blob/main/Images/DriftBoss.png?raw=true",
-      path: "driftboss/"
-    },
-    {
-      name: "Five Nights at Winston's",
-      image: "https://github.com/mragic/Agic/blob/main/Images/FiveNightsAtWinstons.png?raw=true",
-      path: "fnaw/"
-    },
-    {
-      name: "Slither.io Remake",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Slither.ioRemake.png?raw=true",
-      path: "slitherio/"
-    },
-    {
-      name: "Snow Rider 3D",
-      image: "https://github.com/mragic/Agic/blob/main/Images/SnowRider3D.png?raw=true",
-      path: "snowrider3d/"
-    },
-    {
-      name: "Stack",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Stack.png?raw=true",
-      path: "stack/"
-    },
-    {
-      name: "Subway Surfers San Francisco",
-      image: "https://github.com/mragic/Agic/blob/main/Images/SubwaySurfersSanFrancisco.png?raw=true",
-      path: "subwaysurfers/"
-    },
-    {
-      name: "There Is No Game",
-      image: "https://github.com/mragic/Agic/blob/main/Images/ThereIsNoGame.png?raw=true",
-      path: "thereisnogame/"
-    },
-    {
-      name: "Tiny Cars",
-      image: "https://github.com/mragic/Agic/blob/main/Images/TinyCars.png?raw=true",
-      path: "tinycars/"
-    },
-    {
-      name: "Tiny Fishing",
-      image: "https://github.com/mragic/Agic/blob/main/Images/TinyFishing.png?raw=true",
-      path: "tinyfishing/"
-    },
-    {
-      name: "Unicycle Hero",
-      image: "https://github.com/mragic/Agic/blob/main/Images/UnicycleHero.png?raw=true",
-      path: "unicyclehero/"
-    },
-    {
-      name: "Wolfenstein 3D",
-      image: "https://github.com/mragic/Agic/blob/main/Images/Wolfenstein3D.png?raw=true",
-      path: "wolfenstein3d/"
-    },
-    {
-      name: "Fireboy and Watergirl 1: Forest Temple",
-      image: "https://github.com/mragic/Agic/blob/main/Images/FireBoyWaterGirl1.jpg?raw=true",
-      path: "FBWG1"
-    }
-  ];
+const games = [
+  { name: "Cookie Clicker", image: "https://github.com/mragic/Agic/blob/main/Images/cookieclicker.jpeg?raw=true", path: "cookieclicker/" },
+  { name: "Doge Miner", image: "https://github.com/mragic/Agic/blob/main/Images/dogeminer.png?raw=true", path: "DogeMiner/" },
+  { name: "Flappy Bird", image: "https://github.com/mragic/Agic/blob/main/Images/Flappybird.jpg?raw=true", path: "flappy/" },
+  { name: "2048", image: "https://github.com/mragic/Agic/blob/main/Images/2048.jpg?raw=true", path: "2048/" },
+  { name: "Five Nights at Freddy's 4", image: "https://github.com/mragic/Agic/blob/main/Images/FNAFS4.png?raw=true", path: "FNAF4/" },
+  { name: "Basketball Stars", image: "https://github.com/mragic/Agic/blob/main/Images/BasketballStars.jpeg?raw=true", path: "basketball-stars/" },
+  { name: "Doodle Jump", image: "https://github.com/mragic/Agic/blob/main/Images/doodlejump.jpg?raw=true", path: "doodle/" },
+  { name: "Slope", image: "https://github.com/mragic/Agic/blob/main/Images/slope.jpg?raw=true", path: "slope/" },
+  { name: "AdVenture Capitalist", image: "https://github.com/mragic/Agic/blob/main/Images/AdVentureCapitalist.jpg?raw=true", path: "adcap/" },
+  { name: "A Dance Of Fire And Ice", image: "https://github.com/mragic/Agic/blob/main/Images/ADanceOfFireAndIce.jpg?raw=true", path: "adofai/" },
+  { name: "Baldi's Basics in Education and Learning", image: "https://github.com/mragic/Agic/blob/main/Images/BaldisBasics.png?raw=true", path: "baldi/" },
+  { name: "Burrito Bison", image: "https://github.com/mragic/Agic/blob/main/Images/BurritoBison.jpg?raw=true", path: "bison/" },
+  { name: "Twitch Tetris", image: "https://github.com/mragic/Agic/blob/main/Images/TwitchTetris.png?raw=true", path: "tetris/" },
+  { name: "BitLife", image: "https://github.com/mragic/Agic/blob/main/Images/BitLife.png?raw=true", path: "bitlife/" },
+  { name: "Boxing Physics 2", image: "https://github.com/mragic/Agic/blob/main/Images/BoxingPhysics2.jpg?raw=true", path: "boxing-physics2/" },
+  { name: "BreakLock", image: "https://github.com/mragic/Agic/blob/main/Images/BreakLock.jpg?raw=true", path: "breaklock/" },
+  { name: "Burger & Frights", image: "https://github.com/mragic/Agic/blob/main/Images/Burger&Frights.png?raw=true", path: "burger/" },
+  { name: "Cell To Singularity", image: "https://github.com/mragic/Agic/blob/main/Images/CellToSingularity.jpg?raw=true", path: "cell/" },
+  { name: "Chrome Dino", image: "https://github.com/mragic/Agic/blob/main/Images/ChromeDIno.png?raw=true", path: "chrome-dino/" },
+  { name: "Sort The Court", image: "https://github.com/mragic/Agic/blob/main/Images/SortTheCourt.jpg?raw=true", path: "court/" },
+  { name: "Crossy Road", image: "https://github.com/mragic/Agic/blob/main/Images/CrossyRoad.png?raw=true", path: "crossy/" },
+  { name: "Fruit Ninja", image: "https://github.com/mragic/Agic/blob/main/Images/FruitNinja.jpg?raw=true", path: "fruitninja/" },
+  { name: "Doodle God", image: "https://github.com/mragic/Agic/blob/main/Images/DoodleGod.jpg?raw=true", path: "fruitninja/" },
+  { name: "Dreader", image: "https://github.com/mragic/Agic/blob/main/Images/Dreader.png?raw=true", path: "dreader/" },
+  { name: "Exhibit Of Sorrows", image: "https://github.com/mragic/Agic/blob/main/Images/ExhibitOfSorrows.png?raw=true", path: "exhibit/" },
+  { name: "Friday Night Funkin´", image: "https://github.com/mragic/Agic/blob/main/Images/FridayNightFunkin.png?raw=true", path: "fnf-w7/" },
+  { name: "Papa's Freezeria", image: "https://github.com/mragic/Agic/blob/main/Images/PapasFreezeria.jpg?raw=true", path: "freezeria/" },
+  { name: "Friendly Fire", image: "https://github.com/mragic/Agic/blob/main/Images/FriendlyFire.jpg?raw=true", path: "friendlyfire/" },
+  { name: "Game Inside A Game", image: "https://github.com/mragic/Agic/blob/main/Images/GameInsideAGame.jpg?raw=true", path: "game-inside/" },
+  { name: "George And The Printer", image: "https://github.com/mragic/Agic/blob/main/Images/GeorgeAndThePrinter.jpg?raw=true", path: "dreader/" },
+  { name: "Getaway Shootout", image: "https://github.com/mragic/Agic/blob/main/Images/%20GetawayShootout.jpg?raw=true", path: "getaway-shootout/" },
+  { name: "Grey-Box Tesing", image: "https://github.com/mragic/Agic/blob/main/Images/GreyBoxTesting.jpg?raw=true", path: "greybox/" },
+  { name: "Happy Wheels", image: "https://github.com/mragic/Agic/blob/main/Images/HappyWheels.png?raw=true", path: "580301-HappyWheels/" },
+  { name: "Papa's Hot Doggeria", image: "https://github.com/mragic/Agic/blob/main/Images/PapasHotDoggeria.jpg?raw=true", path: "hotdoggeria/" },
+  { name: "Jetpack Joyride", image: "https://github.com/mragic/Agic/blob/main/Images/JetpackJoyride.png?raw=true", path: "jetpackjoyride/" },
+  { name: "Knife Hit", image: "https://github.com/mragic/Agic/blob/main/Images/KnifeHit.png?raw=true", path: "knifehit/" },
+  { name: "Apple Knight", image: "https://github.com/mragic/Agic/blob/main/Images/AppleKnight.jpg?raw=true", path: "knight/" },
+  { name: "Lose95", image: "https://github.com/mragic/Agic/blob/main/Images/Lose95.png?raw=true", path: "lose95/" },
+  { name: "Papa Louie", image: "https://github.com/mragic/Agic/blob/main/Images/PapaLouie.jpeg?raw=true", path: "louie/" },
+  { name: "Super Mario Bros. Versus", image: "https://github.com/mragic/Agic/blob/main/Images/SuperMarioBrosVersus.jpg?raw=true", path: "dreader/" },
+  { name: "Minecraft Beta 0.30", image: "https://github.com/mragic/Agic/blob/main/Images/MinecraftBeta0.30.png?raw=true", path: "mcbeta0.30/" },
+  { name: "The Open House", image: "https://github.com/mragic/Agic/blob/main/Images/TheOpenHouse.jpg?raw=true", path: "open/" },
+  { name: "Papa's Burgeria", image: "https://github.com/mragic/Agic/blob/main/Images/PapasBurgeria.jpg?raw=true", path: "papasb/" },
+  { name: "Papa's Pizzeria", image: "https://github.com/mragic/Agic/blob/main/Images/PapasPizzeria.jpg?raw=true", path: "pizzeria/" },
+  { name: "Portaboy", image: "https://github.com/mragic/Agic/blob/main/Images/Portaboy.jpg?raw=true", path: "portaboy/" },
+  { name: "Pressing Under Pressure", image: "https://github.com/mragic/Agic/blob/main/Images/PressingUnderPressure.jpg?raw=true", path: "pressing/" },
+  { name: "Retro Bowl", image: "https://github.com/mragic/Agic/blob/main/Images/RetroBowl.jpg?raw=true", path: "retro-bowl/" },
+  { name: "Robogo", image: "https://github.com/mragic/Agic/blob/main/Images/Robogo.png?raw=true", path: "robogo/" },
+  { name: "Run 3", image: "https://github.com/mragic/Agic/blob/main/Images/Run3.png?raw=true", path: "run3/" },
+  { name: "Bad Time Simulator (Sans Fight)", image: "https://github.com/mragic/Agic/blob/main/Images/BadTimeSimulator.png?raw=true", path: "sansfight/" },
+  { name: "Sketchbook", image: "https://github.com/mragic/Agic/blob/main/Images/Sketchbook.jpg?raw=true", path: "sketchbook/" },
+  { name: "Super Mario 64", image: "https://github.com/mragic/Agic/blob/main/Images/SuperMario64.jpg?raw=true", path: "sm64/" },
+  { name: "Snake", image: "https://github.com/mragic/Agic/blob/main/Images/Snake.png?raw=true", path: "snake/" },
+  { name: "Superhot", image: "https://github.com/mragic/Agic/blob/main/Images/Superhot.png?raw=true", path: "superhot/" },
+  { name: "Deepest Sword", image: "https://github.com/mragic/Agic/blob/main/Images/DeepestSword.jpg?raw=true", path: "sword/" },
+  { name: "Papa's Taco Mia", image: "https://github.com/mragic/Agic/blob/main/Images/PapasTacoMia.png?raw=true", path: "tacomia/" },
+  { name: "Tunnel Rush", image: "https://github.com/mragic/Agic/blob/main/Images/TunnelRush.png?raw=true", path: "tunnelrush/" },
+  { name: "We Become What We Behold", image: "https://github.com/mragic/Agic/blob/main/Images/WeBecomeWhatWeBehold.jpg?raw=true", path: "wbwwb/" },
+  { name: "Wordle Unlimited", image: "https://github.com/mragic/Agic/blob/main/Images/Wordle.png?raw=true", path: "wordle/" },
+  { name: "Wounded Summer", image: "https://github.com/mragic/Agic/blob/main/Images/WoundedSummer.png?raw=true", path: "wounded-summer/" },
+  { name: "Xx142-b2exe", image: "https://github.com/mragic/Agic/blob/main/Images/Xx142-b2exe.png?raw=true", path: "xx142-b2exe/" },
+  { name: "Among Us", image: "https://github.com/mragic/Agic/blob/main/Images/AmongUs.jpg?raw=true", path: "amongus/" },
+  { name: "Block Blast", image: "https://github.com/mragic/Agic/blob/main/Images/BlockBlast.png?raw=true", path: "blockblast/" },
+  { name: "Big Tower Tiny Square", image: "https://github.com/mragic/Agic/blob/main/Images/BigTowerTinySquare.png?raw=true", path: "bigtowertinysquare/" },
+  { name: "Blumgi Slime", image: "https://github.com/mragic/Agic/blob/main/Images/BlumjiSlime.jpg?raw=true", path: "blumgislime/" },
+  { name: "Box Chase", image: "https://github.com/mragic/Agic/blob/main/Images/BoxChase.png?raw=true", path: "boxchase/" },
+  { name: "Capybara Clicker", image: "https://github.com/mragic/Agic/blob/main/Images/CapybaraClicker.png?raw=true", path: "capybaraclicker/" },
+  { name: "CCMMYY", image: "https://github.com/mragic/Agic/blob/main/Images/CCMMYY.png?raw=true", path: "ccmmyy/" },
+  { name: "Impossible Cookie Clicker", image: "https://github.com/mragic/Agic/blob/main/Images/ImpossibleCookieClicker.png?raw=true", path: "impossiblecookieclicker/" },
+  { name: "Breakout", image: "https://github.com/mragic/Agic/blob/main/Images/Breakout.png?raw=true", path: "breakout/" },
+  { name: "Checkers", image: "https://github.com/mragic/Agic/blob/main/Images/Checkers.png?raw=true", path: "checkers/" },
+  { name: "Chess", image: "https://github.com/mragic/Agic/blob/main/Images/Chess.png?raw=true", path: "chess/" },
+  { name: "Cluster Rush", image: "https://github.com/mragic/Agic/blob/main/Images/ClusterRush.jpg?raw=true", path: "clusterrush/" },
+  { name: "Cut The Rope", image: "https://github.com/mragic/Agic/blob/main/Images/CutTheRope.png?raw=true", path: "cuttherope/" },
+  { name: "Deadly Descent", image: "https://github.com/mragic/Agic/blob/main/Images/DeadlyDescent.png?raw=true", path: "deadlydescent/" },
+  { name: "Doge Miner 2", image: "https://github.com/mragic/Agic/blob/main/Images/DogeMiner2.png?raw=true", path: "dogeminer2/" },
+  { name: "Eggy Car", image: "https://github.com/mragic/Agic/blob/main/Images/EggyCar.png?raw=true", path: "eggycar/" },
+  { name: "Getting Over It", image: "https://github.com/mragic/Agic/blob/main/Images/GettingOverIt.png?raw=true", path: "gettingoveritscratch/" },
+  { name: "Gladihoppers", image: "https://github.com/mragic/Agic/blob/main/Images/GladiHoppers.png?raw=true", path: "gladihoppers/" },
+  { name: "Google Baseball", image: "https://github.com/mragic/Agic/blob/main/Images/GoogleBaseball.jpeg?raw=true", path: "googlebaseball/" },
+  { name: "Five Nights at Freddy's 2", image: "https://github.com/mragic/Agic/blob/main/Images/FNAF2.png?raw=true", path: "fnaf2/" },
+  { name: "Drive Mad", image: "https://github.com/mragic/Agic/blob/main/Images/DriveMad.png?raw=true", path: "drivemad/" },
+  { name: "Drift Boss", image: "https://github.com/mragic/Agic/blob/main/Images/DriftBoss.png?raw=true", path: "driftboss/" },
+  { name: "Five Nights at Winston's", image: "https://github.com/mragic/Agic/blob/main/Images/FiveNightsAtWinstons.png?raw=true", path: "fnaw/" },
+  { name: "Slither.io Remake", image: "https://github.com/mragic/Agic/blob/main/Images/Slither.ioRemake.png?raw=true", path: "slitherio/" },
+  { name: "Snow Rider 3D", image: "https://github.com/mragic/Agic/blob/main/Images/SnowRider3D.png?raw=true", path: "snowrider3d/" },
+  { name: "Stack", image: "https://github.com/mragic/Agic/blob/main/Images/Stack.png?raw=true", path: "stack/" },
+  { name: "Subway Surfers San Francisco", image: "https://github.com/mragic/Agic/blob/main/Images/SubwaySurfersSanFrancisco.png?raw=true", path: "subwaysurfers/" },
+  { name: "There Is No Game", image: "https://github.com/mragic/Agic/blob/main/Images/ThereIsNoGame.png?raw=true", path: "thereisnogame/" },
+  { name: "Tiny Cars", image: "https://github.com/mragic/Agic/blob/main/Images/TinyCars.png?raw=true", path: "tinycars/" },
+  { name: "Tiny Fishing", image: "https://github.com/mragic/Agic/blob/main/Images/TinyFishing.png?raw=true", path: "tinyfishing/" },
+  { name: "Unicycle Hero", image: "https://github.com/mragic/Agic/blob/main/Images/UnicycleHero.png?raw=true", path: "unicyclehero/" },
+  { name: "Wolfenstein 3D", image: "https://github.com/mragic/Agic/blob/main/Images/Wolfenstein3D.png?raw=true", path: "wolfenstein3d/" },
+  { name: "Fireboy and Watergirl 1: Forest Temple", image: "https://github.com/mragic/Agic/blob/main/Images/FireBoyWaterGirl1.jpg?raw=true", path: "FBWG1" }];
+
   const gamesContainer = document.getElementById("gamesContainer");
   const searchInput = document.getElementById("search");
   const gameView = document.getElementById("game-view");
