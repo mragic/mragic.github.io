@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -80,18 +80,32 @@
       right: 10px;
       background: rgba(0,0,0,0.6);
       color: white;
-      border: none;
-      border-radius: 50%;
-      padding: 5px;
+      border: 2.0px solid white;
+      border-radius: 10px;
+      padding: 8px;
       display: none;
       cursor: pointer;
       z-index: 5;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      user-select: none;
+      transition: color 0.3s ease, border-color 0.3s ease;
     }
     .game:hover .favorite-btn {
-      display: block;
+      display: flex;
     }
     .favorite-btn.favorited {
       color: yellow;
+      border-color: yellow;
+    }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
     #game-view {
       display: none;
@@ -190,7 +204,7 @@
     base20: { url: "https://mragic.github.io/project/", active: false }
   };
 
-const games = [
+ const games = [
   { name: "Cookie Clicker", image: "https://github.com/mragic/Agic/blob/main/Images/cookieclicker.jpeg?raw=true", path: "cookieclicker/" },
   { name: "Doge Miner", image: "https://github.com/mragic/Agic/blob/main/Images/dogeminer.png?raw=true", path: "DogeMiner/" },
   { name: "Flappy Bird", image: "https://github.com/mragic/Agic/blob/main/Images/Flappybird.jpg?raw=true", path: "flappy/" },
@@ -355,8 +369,10 @@ const games = [
   const gameFrame = document.getElementById("game-frame");
   const gameTitle = document.getElementById("gameTitle");
   const fullscreenBtn = document.getElementById("fullscreenBtn");
+  const topBar = document.querySelector(".top-bar");
 
   let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  let currentView = "all";
 
   function renderGames(list) {
     list.sort((a, b) => a.name.localeCompare(b.name));
@@ -383,21 +399,37 @@ const games = [
 
   function toggleFavorite(game, btn) {
     const index = favorites.findIndex(f => f.name === game.name);
-    if (index >= 0) {
-      favorites.splice(index, 1);
-      btn.classList.remove("favorited");
-    } else {
+    const isFavoriting = index === -1;
+
+    if (isFavoriting) {
       favorites.push(game);
-      btn.classList.add("favorited");
+    } else {
+      favorites.splice(index, 1);
     }
     localStorage.setItem("favorites", JSON.stringify(favorites));
+
+    if (isFavoriting) {
+      btn.classList.add("favorited");
+      btn.style.animation = "pop 0.3s ease forwards";
+      btn.addEventListener("animationend", () => {
+        btn.style.animation = "";
+      }, { once: true });
+    } else {
+      btn.classList.remove("favorited");
+    }
+
+    if (currentView === "favorites") {
+      showFavorites();
+    }
   }
 
   function showAllGames() {
+    currentView = "all";
     renderGames(games);
   }
 
   function showFavorites() {
+    currentView = "favorites";
     renderGames(favorites);
   }
 
@@ -440,26 +472,37 @@ const games = [
       document.exitFullscreen();
     }
     fullscreenBtn.innerText = "⛶";
+    topBar.style.visibility = "visible";
   }
 
   function toggleFullscreen() {
     if (!document.fullscreenElement) {
-      gameView.requestFullscreen();
+      gameFrame.requestFullscreen();
     } else {
       document.exitFullscreen();
     }
   }
 
   document.addEventListener("fullscreenchange", () => {
-    fullscreenBtn.innerText = document.fullscreenElement ? "🡽" : "⛶";
+    const isFullscreen = document.fullscreenElement === gameFrame;
+    fullscreenBtn.innerText = isFullscreen ? "🡽" : "⛶";
+    topBar.style.visibility = isFullscreen ? "hidden" : "visible";
+    fullscreenBtn.style.visibility = "visible";
+    fullscreenBtn.style.position = isFullscreen ? "fixed" : "initial";
+    fullscreenBtn.nextElementSibling.style.visibility = "visible";
   });
 
   searchInput.addEventListener("input", () => {
     const term = searchInput.value.toLowerCase();
-    const filtered = games.filter(g => g.name.toLowerCase().includes(term));
-    const showingFavorites = gamesContainer.innerHTML.includes("favorited");
-    renderGames(showingFavorites ? favorites.filter(g => g.name.toLowerCase().includes(term)) : filtered);
+    if (currentView === "favorites") {
+      renderGames(favorites.filter(g => g.name.toLowerCase().includes(term)));
+    } else {
+      renderGames(games.filter(g => g.name.toLowerCase().includes(term)));
+    }
   });
 
   showAllGames();
 </script>
+
+</body>
+</html>
