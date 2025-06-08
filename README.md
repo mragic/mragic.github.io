@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="AgicLogoNoBg.png" alt="Agic" width="50" />
+  <img src="[AgicLogoNoBg.png](https://github.com/mragic/mragic.github.io/blob/main/Images/AgicLogoNoBg.png?raw=true)" alt="Agic" width="50" />
   <br />
   <strong>Agic</strong>
 </h1>
