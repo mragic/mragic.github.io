@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="link-to-your-logo.png" alt="Agic Logo" width="50" />
+  <img src="AgicLogoNoBg.png" alt="Agic" width="50" />
   <br />
   <strong>Agic</strong>
 </h1>
@@ -14,13 +14,13 @@
 ### ⚡ What is Agic?
 
 **Agic** is a fast and reliable gaming site known for **never being blocked**. It checks multiple repositories for games, and links are updated frequently.  
-We add **10–40 new games daily**, and the entire site is built using **100% pure HTML**, ensuring maximum speed and compatibility.
+I add **10–40 new games daily**, and the entire site is built using **100% pure HTML**.
 
 ---
 
-### 🆕 New Update: 17 New FNF Mods Added!
+### ✨ New Update: 17 New FNF Mods Added!
 
-For all the **Friday Night Funkin'** fans, here are the latest additions:
+For all the **Friday Night Funkin'** fans i gotchu:
 
 - **Friday Night Funkin' Atsuover**  
 - **Friday Night Funkin' B Sides**  
