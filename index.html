@@ -3,11 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Google</title>
-  <link rel="icon" href="Images/GoogleFavicon.png" type="image/png" />
+  <title>Agic</title>
+  <link rel="icon" href="Images/BlurpleAgicIcon.png" type="image/png" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
     body { background: #121212; color: white; overflow-x: hidden; }
+
+    #loading-screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loading-logo {
+      width: 100px;
+      margin-bottom: 30px;
+    }
+
+    .loading-bar {
+      width: 300px;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .loading-progress {
+      height: 100%;
+      background: purple;
+      width: 0%;
+      animation: loadAnim 2s linear forwards;
+    }
+
+    @keyframes loadAnim {
+      to { width: 100%; }
+    }
+
+    #main-content {
+      display: none;
+    }
+
     header {
       background: #000;
       padding: 10px 20px;
@@ -50,6 +90,57 @@
       border-radius: 10px;
       cursor: pointer;
     }
+
+    .section-label {
+      font-weight: bold;
+      font-size: 24px;
+      padding: 20px 20px 10px;
+    }
+
+    .featured-container {
+      width: calc(100% - 40px);
+      max-width: 960px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      height: 200px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      filter: blur(2px);
+      transition: filter 0.5s ease;
+    }
+
+    .featured-container:hover {
+      filter: blur(0);
+    }
+
+    .featured-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .featured-title {
+      font-weight: bold;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .featured-button {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 2px solid white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
     .games-container {
       display: flex;
       flex-wrap: wrap;
@@ -151,8 +242,15 @@
     }
   </style>
 </head>
-<body>
+<body onload="initPage()">
+<div id="loading-screen">
+  <img src="Images/BlurpleAgicIcon.png" class="loading-logo" />
+  <div class="loading-bar">
+    <div class="loading-progress"></div>
+  </div>
+</div>
 
+<div id="main-content">
 <header>
   <img src="Images/BlurpleAgicIcon.png" class="logo" alt="Logo" />
   <div class="search-container">
@@ -164,6 +262,15 @@
   </div>
 </header>
 
+<div class="section-label">Featured:</div>
+<div class="featured-container" id="featuredContainer">
+  <div class="featured-overlay">
+    <div class="featured-title" id="featuredTitle"></div>
+    <button class="featured-button" onclick="openGame(featuredGame)">Play</button>
+  </div>
+</div>
+
+<div class="section-label">All Games:</div>
 <div class="games-container" id="gamesContainer"></div>
 
 <div id="game-view">
@@ -178,6 +285,7 @@
     </div>
   </div>
   <iframe id="game-frame"></iframe>
+</div>
 </div>
 
 <script>
@@ -365,146 +473,146 @@ const games = [
 ];
 
 
-  const gamesContainer = document.getElementById("gamesContainer");
-  const searchInput = document.getElementById("search");
-  const gameView = document.getElementById("game-view");
-  const gameFrame = document.getElementById("game-frame");
-  const gameTitle = document.getElementById("gameTitle");
-  const fullscreenBtn = document.getElementById("fullscreenBtn");
-  const topBar = document.querySelector(".top-bar");
+const featuredGame = games[7];
 
-  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  let currentView = "all";
+const gamesContainer = document.getElementById("gamesContainer");
+const searchInput = document.getElementById("search");
+const gameView = document.getElementById("game-view");
+const gameFrame = document.getElementById("game-frame");
+const gameTitle = document.getElementById("gameTitle");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const topBar = document.querySelector(".top-bar");
 
-  function renderGames(list) {
-    list.sort((a, b) => a.name.localeCompare(b.name));
-    gamesContainer.innerHTML = "";
-    list.forEach(game => {
-      const div = document.createElement("div");
-      div.className = "game";
-      div.style.backgroundImage = `url('${game.image}')`;
-      div.onclick = () => openGame(game);
-      const favBtn = document.createElement("button");
-      favBtn.className = "favorite-btn";
-      favBtn.innerHTML = "★";
-      if (favorites.some(f => f.name === game.name)) {
-        favBtn.classList.add("favorited");
-      }
-      favBtn.onclick = e => {
-        e.stopPropagation();
-        toggleFavorite(game, favBtn);
-      };
-      div.appendChild(favBtn);
-      gamesContainer.appendChild(div);
-    });
-  }
+document.getElementById("featuredContainer").style.backgroundImage = `url('${featuredGame.image}')`;
+document.getElementById("featuredTitle").textContent = featuredGame.name;
 
-  function toggleFavorite(game, btn) {
-    const index = favorites.findIndex(f => f.name === game.name);
-    const isFavoriting = index === -1;
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+let currentView = "all";
 
-    if (isFavoriting) {
-      favorites.push(game);
-    } else {
-      favorites.splice(index, 1);
+function renderGames(list) {
+  list.sort((a, b) => a.name.localeCompare(b.name));
+  gamesContainer.innerHTML = "";
+  list.forEach(game => {
+    const div = document.createElement("div");
+    div.className = "game";
+    div.style.backgroundImage = `url('${game.image}')`;
+    div.onclick = () => openGame(game);
+    const favBtn = document.createElement("button");
+    favBtn.className = "favorite-btn";
+    favBtn.innerHTML = "★";
+    if (favorites.some(f => f.name === game.name)) {
+      favBtn.classList.add("favorited");
     }
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-
-    if (isFavoriting) {
-      btn.classList.add("favorited");
-      btn.style.animation = "pop 0.3s ease forwards";
-      btn.addEventListener("animationend", () => {
-        btn.style.animation = "";
-      }, { once: true });
-    } else {
-      btn.classList.remove("favorited");
-    }
-
-    if (currentView === "favorites") {
-      showFavorites();
-    }
-  }
-
-  function showAllGames() {
-    currentView = "all";
-    renderGames(games);
-  }
-
-  function showFavorites() {
-    currentView = "favorites";
-    renderGames(favorites);
-  }
-
-  async function openGame(game) {
-    if (game.link) {
-      launchGame(game.link, game.name);
-      return;
-    }
-
-    const activeBases = Object.values(BASE_URLS)
-      .filter(base => base.active)
-      .map(base => base.url);
-
-    for (const base of activeBases) {
-      const fullUrl = base + game.path;
-      try {
-        const response = await fetch(fullUrl, { method: 'HEAD' });
-        if (response.ok) {
-          launchGame(fullUrl, game.name);
-          return;
-        }
-      } catch (e) {
-        console.warn(`Failed to load from: ${fullUrl}`);
-      }
-    }
-
-    alert(`Could not load "${game.name}"`);
-  }
-
-  function launchGame(url, title) {
-    gameFrame.src = url;
-    gameTitle.textContent = title;
-    gameView.style.display = "flex";
-  }
-
-  function closeGame() {
-    gameView.style.display = "none";
-    gameFrame.src = "";
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    }
-    fullscreenBtn.innerText = "⛶";
-    topBar.style.visibility = "visible";
-  }
-
-  function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-      gameFrame.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  }
-
-  document.addEventListener("fullscreenchange", () => {
-    const isFullscreen = document.fullscreenElement === gameFrame;
-    fullscreenBtn.innerText = isFullscreen ? "🡽" : "⛶";
-    topBar.style.visibility = isFullscreen ? "hidden" : "visible";
-    fullscreenBtn.style.visibility = "visible";
-    fullscreenBtn.style.position = isFullscreen ? "fixed" : "initial";
-    fullscreenBtn.nextElementSibling.style.visibility = "visible";
+    favBtn.onclick = e => {
+      e.stopPropagation();
+      toggleFavorite(game, favBtn);
+    };
+    div.appendChild(favBtn);
+    gamesContainer.appendChild(div);
   });
+}
 
-  searchInput.addEventListener("input", () => {
-    const term = searchInput.value.toLowerCase();
-    if (currentView === "favorites") {
-      renderGames(favorites.filter(g => g.name.toLowerCase().includes(term)));
-    } else {
-      renderGames(games.filter(g => g.name.toLowerCase().includes(term)));
-    }
-  });
+function toggleFavorite(game, btn) {
+  const index = favorites.findIndex(f => f.name === game.name);
+  const isFavoriting = index === -1;
+  if (isFavoriting) {
+    favorites.push(game);
+  } else {
+    favorites.splice(index, 1);
+  }
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  if (isFavoriting) {
+    btn.classList.add("favorited");
+    btn.style.animation = "pop 0.3s ease forwards";
+    btn.addEventListener("animationend", () => {
+      btn.style.animation = "";
+    }, { once: true });
+  } else {
+    btn.classList.remove("favorited");
+  }
+  if (currentView === "favorites") {
+    showFavorites();
+  }
+}
 
+function showAllGames() {
+  currentView = "all";
+  renderGames(games);
+}
+
+function showFavorites() {
+  currentView = "favorites";
+  renderGames(favorites);
+}
+
+async function openGame(game) {
+  if (game.link) {
+    launchGame(game.link, game.name);
+    return;
+  }
+  const activeBases = Object.values(BASE_URLS).filter(base => base.active).map(base => base.url);
+  for (const base of activeBases) {
+    const fullUrl = base + game.path;
+    try {
+      const response = await fetch(fullUrl, { method: 'HEAD' });
+      if (response.ok) {
+        launchGame(fullUrl, game.name);
+        return;
+      }
+    } catch (e) {}
+  }
+  alert(`Could not load "${game.name}"`);
+}
+
+function launchGame(url, title) {
+  gameFrame.src = url;
+  gameTitle.textContent = title;
+  gameView.style.display = "flex";
+}
+
+function closeGame() {
+  gameView.style.display = "none";
+  gameFrame.src = "";
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+  fullscreenBtn.innerText = "⛶";
+  topBar.style.visibility = "visible";
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    gameFrame.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+document.addEventListener("fullscreenchange", () => {
+  const isFullscreen = document.fullscreenElement === gameFrame;
+  fullscreenBtn.innerText = isFullscreen ? "🡽" : "⛶";
+  topBar.style.visibility = isFullscreen ? "hidden" : "visible";
+  fullscreenBtn.style.visibility = "visible";
+  fullscreenBtn.style.position = isFullscreen ? "fixed" : "initial";
+  fullscreenBtn.nextElementSibling.style.visibility = "visible";
+});
+
+searchInput.addEventListener("input", () => {
+  const term = searchInput.value.toLowerCase();
+  if (currentView === "favorites") {
+    renderGames(favorites.filter(g => g.name.toLowerCase().includes(term)));
+  } else {
+    renderGames(games.filter(g => g.name.toLowerCase().includes(term)));
+  }
+});
+
+function initPage() {
   showAllGames();
+  setTimeout(() => {
+    document.getElementById("loading-screen").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+  }, 2200);
+}
 </script>
-
 </body>
 </html>
