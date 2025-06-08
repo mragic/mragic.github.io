@@ -1,5 +1,41 @@
-196 Games, V1.26
+<h1 align="center">
+  <img src="link-to-your-logo.png" alt="Agic Logo" width="50" />
+  <br />
+  <strong>Agic</strong>
+</h1>
 
-Agic Is a fast and reliable gaming site known for never being blocked since it checks multiple repos for games and links will be updated frequently. 10-20 Games Are daily added and the site is 100% Pure HTML Code.
+<p align="center">
+  <strong>213 Games - Version 1.37</strong><br />
+  Fast, reliable, and unblocked as always.
+</p>
 
-New Update: Daily Featured Game At the top of the page And Loading Screen so no lag when loading the site for the first time, Game images will never disappear randomly anymore!
+---
+
+### ⚡ What is Agic?
+
+**Agic** is a fast and reliable gaming site known for **never being blocked**. It checks multiple repositories for games, and links are updated frequently.  
+We add **10–40 new games daily**, and the entire site is built using **100% pure HTML**, ensuring maximum speed and compatibility.
+
+---
+
+### 🆕 New Update: 17 New FNF Mods Added!
+
+For all the **Friday Night Funkin'** fans, here are the latest additions:
+
+- **Friday Night Funkin' Atsuover**  
+- **Friday Night Funkin' B Sides**  
+- **Friday Night Funkin' Deep Sea Date**  
+- **Friday Night Funkin' Everywhere At The End Of Funk**  
+- **Friday Night Funkin' FlipSide**  
+- **Friday Night Funkin' Hell Beats**  
+- **Friday Night Funkin' Henry Stickmin**  
+- **Friday Night Funkin' Hex**  
+- **Friday Night Funkin' Kapi**  
+- **Friday Night Funkin' Shaggy X Matt**  
+- **Friday Night Funkin' Miku**  
+- **Friday Night Funkin' Matt**  
+- **Friday Night Funkin' Minus**  
+- **Friday Night Funkin' Monika**  
+- **Friday Night Funkin' Neo**  
+- **Friday Night Funkin' Rose Criminal**  
+- **Friday Night Funkin' Xe**
