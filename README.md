@@ -39,3 +39,5 @@ For all the **Friday Night Funkin'** fans i gotchu:
 - **Friday Night Funkin' Neo**  
 - **Friday Night Funkin' Rose Criminal**  
 - **Friday Night Funkin' Xe**
+
+---
