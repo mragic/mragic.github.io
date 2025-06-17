@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  <strong>213 Games - Version 1.37</strong><br />
+  <strong>219 Games - Version 1.41</strong><br />
   Fast, reliable, and unblocked as always.
 </p>
 
@@ -18,26 +18,15 @@ I add **10–40 new games about 3 times a week**, and the entire site is built u
 
 ---
 
-### ✨ New Update: 17 New FNF Mods Added!
+### ✨ New Update: 6 New Games Added!
 
-For all the **Friday Night Funkin'** fans i gotchu:
+**6** Epic new games.
 
-- **Friday Night Funkin' Atsuover**  
-- **Friday Night Funkin' B Sides**  
-- **Friday Night Funkin' Deep Sea Date**  
-- **Friday Night Funkin' Everywhere At The End Of Funk**  
-- **Friday Night Funkin' FlipSide**  
-- **Friday Night Funkin' Hell Beats**  
-- **Friday Night Funkin' Henry Stickmin**  
-- **Friday Night Funkin' Hex**  
-- **Friday Night Funkin' Kapi**  
-- **Friday Night Funkin' Shaggy X Matt**  
-- **Friday Night Funkin' Miku**  
-- **Friday Night Funkin' Matt**  
-- **Friday Night Funkin' Minus**  
-- **Friday Night Funkin' Monika**  
-- **Friday Night Funkin' Neo**  
-- **Friday Night Funkin' Rose Criminal**  
-- **Friday Night Funkin' Xe**
+- **Stick Defenders**  
+- **Ballistic Chickens**  
+- **Dadish**  
+- **Dadish 2**  
+- **Bloxorz**  
+- **1v1.Lol*  
 
 ---
