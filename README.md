@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  <strong>219 Games - Version 1.41</strong><br />
+  <strong>178 Games - Version 1.41</strong><br />
   Fast, reliable, and unblocked as always.
 </p>
 
