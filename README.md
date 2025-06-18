@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  <strong>178 Games - Version 1.41</strong><br />
+  <strong>188 Games - Version 1.55</strong><br />
   Fast, reliable, and unblocked as always.
 </p>
 
@@ -18,15 +18,19 @@ I add **10–40 new games about 3 times a week**, and the entire site is built u
 
 ---
 
-### ✨ New Update: 6 New Games Added!
+### ✨ New Update: 10 New Games Added!
 
-**6** Epic new games.
+**10** Crazy new games Including all of the duck life series!
 
-- **Stick Defenders**  
-- **Ballistic Chickens**  
-- **Dadish**  
-- **Dadish 2**  
-- **Bloxorz**  
-- **1v1.Lol*  
+- **Duck Life**  
+- **Duck Life 2**  
+- **Duck Life 3**  
+- **Duck Life 4**  
+- **Death Soul**  
+- **Doge 2048**
+- **Death Run 3D**  
+- **Eat Small Fishes**  
+- **Earn To Die 2012**  
+- **WebGL Fluid Simulation**
 
 ---
