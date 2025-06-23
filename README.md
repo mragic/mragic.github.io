@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  <strong>188 Games - Version 1.55</strong><br />
+  <strong>203 Games - Version 1.73</strong><br />
   Fast, reliable, and unblocked as always.
 </p>
 
@@ -18,19 +18,24 @@ I add **10–40 new games about 3 times a week**, and the entire site is built u
 
 ---
 
-### ✨ New Update: 10 New Games Added!
+### ✨ New Update: 15 New Games Added!
 
-**10** Crazy new games Including all of the duck life series!
+**15** Awesome new adventures to play and enjoy also i think you should try Gons.io and Breaking The Bank
 
-- **Duck Life**  
-- **Duck Life 2**  
-- **Duck Life 3**  
-- **Duck Life 4**  
-- **Death Soul**  
-- **Doge 2048**
-- **Death Run 3D**  
-- **Eat Small Fishes**  
-- **Earn To Die 2012**  
-- **WebGL Fluid Simulation**
+- **Archer Master 3D**  
+- **Basket Random**  
+- **Bejeweled**  
+- **Breaking The Bank**  
+- **Cannon Basketball 4**  
+- **Contre Jour**
+- **DOOMORI**  
+- **Flappy ZigZag**  
+- **Gons.io**  
+- **House Of Hazards**
+- **Idle Merge Car And Race**
+- **Just Fall LOL**  
+- **Just One Boss**  
+- **Mini Battle City**  
+- **The Impossible Quiz**
 
 ---
