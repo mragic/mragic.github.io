@@ -1,6 +1,670 @@
 <!DOCTYPE html>
 <html lang="en">
+<head><!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agic</title>
+  <link rel="icon" href="Images/AgicLogoNoBg.png" type="image/png" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+    body { background: #121212; color: white; overflow-x: hidden; }
+
+    #loading-screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loading-logo {
+      width: 100px;
+      margin-bottom: 30px;
+    }
+
+    .loading-bar {
+      width: 300px;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .loading-progress {
+      height: 100%;
+      background: purple;
+      width: 0%;
+      animation: loadAnim 2s linear forwards;
+    }
+
+    @keyframes loadAnim {
+      to { width: 100%; }
+    }
+
+    #main-content {
+      display: none;
+    }
+
+    header {
+      background: #000;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header img.logo {
+      height: 40px;
+    }
+    .search-container {
+      flex: 1;
+      margin: 0 20px;
+      position: relative;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      background: #222;
+      color: white;
+    }
+    .search-container input::placeholder {
+      color: #888;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .nav-buttons button {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .section-label {
+      font-weight: bold;
+      font-size: 24px;
+      padding: 20px 20px 10px;
+    }
+
+    .featured-container {
+      width: calc(100% - 40px);
+      max-width: 960px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      height: 200px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      filter: blur(2px);
+      transition: filter 0.5s ease;
+    }
+
+    .featured-container:hover {
+      filter: blur(0);
+    }
+
+    .featured-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .featured-title {
+      font-weight: bold;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .featured-button {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 2px solid white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .games-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      justify-content: center;
+    }
+    .game {
+      position: relative;
+      width: 300px;
+      height: 180px;
+      border-radius: 15px;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      border: 5px solid transparent;
+      box-shadow: 0 0 0px transparent;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .game:hover {
+      transform: scale(1.10);
+      box-shadow: 0 0 15px rgba(128, 0, 128, 0.7);
+      border-color: rgba(128, 0, 128, 0.8);
+    }
+    .favorite-btn {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: 2.0px solid white;
+      border-radius: 10px;
+      padding: 8px;
+      display: none;
+      cursor: pointer;
+      z-index: 5;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      user-select: none;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+    .game:hover .favorite-btn {
+      display: flex;
+    }
+    .favorite-btn.favorited {
+      color: yellow;
+      border-color: yellow;
+    }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    #game-view {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #000;
+      z-index: 1000;
+      flex-direction: column;
+    }
+    #game-frame {
+      flex: 1;
+      border: none;
+      width: 100%;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 10px;
+      background: black;
+      color: white;
+      height: 40px;
+    }
+    .top-bar img {
+      height: 30px;
+    }
+    .top-bar h2 {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+    }
+    .top-bar button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+    }
+    .top-bar .fullscreen-btn {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body onload="initPage()">
+<div id="loading-screen">
+  <img src="Images/AgicLogoNoBg.png" class="loading-logo" />
+  <div class="loading-bar">
+    <div class="loading-progress"></div>
+  </div>
+</div>
+
+<div id="main-content">
+<header>
+  <img src="Images/AgicLogoNoBg.png" class="logo" alt="Logo" />
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Search..." />
+  </div>
+  <div class="nav-buttons">
+    <button onclick="showAllGames()">All Games</button>
+    <button onclick="showFavorites()">★ Favorites</button>
+  </div>
+</header>
+
+<div class="section-label">Featured:</div>
+<div class="featured-container" id="featuredContainer">
+  <div class="featured-overlay">
+    <div class="featured-title" id="featuredTitle"></div>
+    <button class="featured-button" onclick="openGame(featuredGame)">Play</button>
+  </div>
+</div>
+
+<div class="section-label">All Games:</div>
+<div class="games-container" id="gamesContainer"></div>
+
+<div id="game-view">
+  <div class="top-bar">
+    <div style="display: flex; align-items: center;">
+      <img src="Images/AgicLogoNoBg.png" />
+    </div>
+    <h2 id="gameTitle"></h2>
+    <div>
+      <button class="fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()">⛶</button>
+      <button onclick="closeGame()">✕</button>
+    </div>
+  </div>
+  <iframe id="game-frame"></iframe>
+</div>
+</div>
+
+<script>
+  const BASE_URLS = {
+    base1: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles384207-1/", active: true },
+    base2: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles527194-2/other/", active: true },
+    base3: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/", active: true },
+    base4: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles527194-2/other1/", active: true },
+    base5: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles527194-2/other2/", active: true },
+    base6: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles527194-2/other4/", active: true },
+    base7: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles527194-2/other3/", active: true },
+    base8: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles183294-4/", active: true },
+    base9: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles48018-3/", active: true },
+    base10: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/AgicFiles91738-5/", active: true },
+    base11: { url: "https://a7k9-Lq2d-V8r1-zX0c-Mb6p-Tn4g-Wy3e-Ju5h.github.io/AgicFiles018374-6/", active: true },
+    base12: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/fnf/", active: true },
+    base13: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/MassiveStorage/", active: true },
+    base14: { url: "https://a7k9-lq2d-v8r1-zx0c-mb6p-tn4g-wy3e-ju5h.github.io/minecraft/", active: true },
+    base15: { url: "https://mragic.github.io/project/", active: false },
+    base16: { url: "https://mragic.github.io/project/", active: false },
+    base17: { url: "https://mragic.github.io/project/", active: false },
+    base18: { url: "https://mragic.github.io/project/", active: false },
+    base19: { url: "https://mragic.github.io/project/", active: false },
+    base20: { url: "https://mragic.github.io/project/", active: false }
+  };
+
+
+const games = [
+{ name: "Cookie Clicker", image: "Images/cookieclicker.jpeg", path: "cookieclicker/" },
+{ name: "Doge Miner", image: "Images/dogeminer.png", path: "DogeMiner/" },
+{ name: "Flappy Bird", image: "Images/Flappybird.jpg", path: "flappy/" },
+{ name: "2048", image: "Images/2048.jpg", path: "2048/" },
+{ name: "Five Nights at Freddy's 4", image: "Images/FNAFS4.png", path: "FNAF4/" },
+{ name: "Basketball Stars", image: "Images/BasketballStars.jpeg", path: "basketball-stars/" },
+{ name: "Doodle Jump", image: "Images/doodlejump.jpg", path: "doodle/" },
+{ name: "Slope", image: "Images/slope.jpg", path: "slope/" },
+{ name: "AdVenture Capitalist", image: "Images/AdVentureCapitalist.jpg", path: "adcap/" },
+{ name: "A Dance Of Fire And Ice", image: "Images/adofai.png", path: "adofai/" },
+{ name: "Baldi's Basics in Education and Learning", image: "Images/BaldisBasics.png", path: "baldi/" },
+{ name: "Burrito Bison", image: "Images/BurritoBison.jpg", path: "bison/" },
+{ name: "Twitch Tetris", image: "Images/TwitchTetris.png", path: "tetris/" },
+{ name: "BitLife", image: "Images/BitLife.png", path: "bitlife/" },
+{ name: "Boxing Physics 2", image: "Images/BoxingPhysics2.jpg", path: "boxing-physics2/" },
+{ name: "BreakLock", image: "Images/BreakLock.jpg", path: "breaklock/" },
+{ name: "Burger & Frights", image: "Images/Burger&Frights.png", path: "burger/" },
+{ name: "Cell To Singularity", image: "Images/CellToSingularity.jpg", path: "cell/" },
+{ name: "Chrome Dino", image: "Images/ChromeDIno.png", path: "chrome-dino/" },
+{ name: "Sort The Court", image: "Images/SortTheCourt.jpg", path: "court/" },
+{ name: "Crossy Road", image: "Images/CrossyRoad.png", path: "crossy/" },
+{ name: "Fruit Ninja", image: "Images/FruitNinja.jpg", path: "fruitninja/" },
+{ name: "Doodle God", image: "Images/DoodleGod.jpg", path: "fruitninja/" },
+{ name: "Dreader", image: "Images/Dreader.png", path: "dreader/" },
+{ name: "Exhibit Of Sorrows", image: "Images/ExhibitOfSorrows.png", path: "exhibit/" },
+{ name: "Friday Night Funkin´", image: "Images/FridayNightFunkin.png", path: "fnf-w7/" },
+{ name: "Papa's Freezeria", image: "Images/PapasFreezeria.jpg", path: "freezeria/" },
+{ name: "Friendly Fire", image: "Images/FriendlyFire.jpg", path: "friendlyfire/" },
+{ name: "Game Inside A Game", image: "Images/GameInsideAGame.jpg", path: "game-inside/" },
+{ name: "George And The Printer", image: "Images/GeorgeAndThePrinter.jpg", path: "dreader/" },
+{ name: "Getaway Shootout", image: "Images/%20GetawayShootout.jpg", path: "getaway-shootout/" },
+{ name: "Grey-Box Tesing", image: "Images/GreyBoxTesting.jpg", path: "greybox/" },
+{ name: "Happy Wheels", image: "Images/HappyWheels.png", path: "580301-HappyWheels/" },
+{ name: "Papa's Hot Doggeria", image: "Images/PapasHotDoggeria.jpg", path: "hotdoggeria/" },
+{ name: "Jetpack Joyride", image: "Images/JetpackJoyride.png", path: "jetpackjoyride/" },
+{ name: "Knife Hit", image: "Images/KnifeHit.png", path: "knifehit/" },
+{ name: "Apple Knight", image: "Images/AppleKnight.png", path: "knight/" },
+{ name: "Lose95", image: "Images/Lose95.png", path: "lose95/" },
+{ name: "Papa Louie", image: "Images/PapaLouie.jpeg", path: "louie/" },
+{ name: "Super Mario Bros. Versus", image: "Images/SuperMarioBrosVersus.jpg", path: "mariovsluigi/" },
+{ name: "Minecraft Classic", image: "Images/MinecraftClassic.png", path: "mcbeta0.30/" },
+{ name: "The Open House", image: "Images/TheOpenHouse.jpg", path: "open/" },
+{ name: "Papa's Burgeria", image: "Images/PapasBurgeria.jpg", path: "papasb/" },
+{ name: "Papa's Pizzeria", image: "Images/PapasPizzeria.jpg", path: "pizzeria/" },
+{ name: "Portaboy", image: "Images/Portaboy.jpg", path: "portaboy/" },
+{ name: "Pressing Under Pressure", image: "Images/PressingUnderPressure.jpg", path: "pressing/" },
+{ name: "Retro Bowl", image: "Images/RetroBowl.jpg", path: "retro-bowl/" },
+{ name: "Robogo", image: "Images/Robogo.png", path: "robogo/" },
+{ name: "Run 3", image: "Images/Run3.png", path: "Run3/" },
+{ name: "Bad Time Simulator (Sans Fight)", image: "Images/BadTimeSimulator.png", path: "sansfight/" },
+{ name: "Sketchbook", image: "Images/Sketchbook.jpg", path: "sketchbook/" },
+{ name: "Super Mario 64", image: "Images/SuperMario64.jpg", path: "sm64/" },
+{ name: "Snake", image: "Images/Snake.png", path: "snake/" },
+{ name: "Superhot", image: "Images/Superhot.png", path: "superhot/" },
+{ name: "Deepest Sword", image: "Images/DeepestSword.jpg", path: "sword/" },
+{ name: "Papa's Taco Mia", image: "Images/PapasTacoMia.png", path: "tacomia/" },
+{ name: "Tunnel Rush", image: "Images/TunnelRush.png", path: "tunnelrush/" },
+{ name: "We Become What We Behold", image: "Images/WeBecomeWhatWeBehold.jpg", path: "wbwwb/" },
+{ name: "Wordle Unlimited", image: "Images/Wordle.png", path: "wordle/" },
+{ name: "Wounded Summer", image: "Images/WoundedSummer.png", path: "wounded-summer/" },
+{ name: "Xx142-b2exe", image: "Images/Xx142-b2exe.png", path: "xx142-b2exe/" },
+{ name: "Among Us", image: "Images/AmongUs.jpg", path: "amongus/" },
+{ name: "Block Blast", image: "Images/BlockBlast.png", path: "blockblast/" },
+{ name: "Big Tower Tiny Square", image: "Images/BigTowerTinySquare.png", path: "bigtowertinysquare/" },
+{ name: "Blumgi Slime", image: "Images/BlumjiSlime.jpg", path: "blumgislime/" },
+{ name: "Box Chase", image: "Images/BoxChase.png", path: "boxchase/" },
+{ name: "Capybara Clicker", image: "Images/CapybaraClicker.png", path: "capybaraclicker/" },
+{ name: "CCMMYY", image: "Images/CCMMYY.png", path: "ccmmyy/" },
+{ name: "Impossible Cookie Clicker", image: "Images/ImpossibleCookieClicker.png", path: "impossiblecookieclicker/" },
+{ name: "Breakout", image: "Images/Breakout.png", path: "breakout/" },
+{ name: "Checkers", image: "Images/Checkers.png", path: "checkers/" },
+{ name: "Chess", image: "Images/Chess.png", path: "chess/" },
+{ name: "Cluster Rush", image: "Images/ClusterRush.jpg", path: "clusterrush/" },
+{ name: "Cut The Rope", image: "Images/CutTheRope.png", path: "cuttherope/" },
+{ name: "Deadly Descent", image: "Images/DeadlyDescent.png", path: "deadlydescent/" },
+{ name: "Doge Miner 2", image: "Images/DogeMiner2.png", path: "dogeminer2/" },
+{ name: "Eggy Car", image: "Images/EggyCar.png", path: "eggycar/" },
+{ name: "Getting Over It", image: "Images/GettingOverIt.png", path: "gettingoveritscratch/" },
+{ name: "Gladihoppers", image: "Images/GladiHoppers.png", path: "gladihoppers/" },
+{ name: "Google Baseball", image: "Images/GoogleBaseball.jpeg", path: "googlebaseball/" },
+{ name: "Five Nights at Freddy's 2", image: "Images/FNAF2.png", path: "fnaf2/" },
+{ name: "Drive Mad", image: "Images/DriveMad.png", path: "drivemad/" },
+{ name: "Drift Boss", image: "Images/DriftBoss.png", path: "driftboss/" },
+{ name: "Five Nights at Winston's", image: "Images/FiveNightsAtWinstons.png", path: "fnaw/" },
+{ name: "Slither.io Remake", image: "Images/Slither.ioRemake.png", path: "slitherio/" },
+{ name: "Snow Rider 3D", image: "Images/SnowRider3D.png", path: "snowrider3d/" },
+{ name: "Stack", image: "Images/Stack.png", path: "stack/" },
+{ name: "Subway Surfers San Francisco", image: "Images/SubwaySurfersSanFrancisco.png", path: "subwaysurfers/" },
+{ name: "There Is No Game", image: "Images/ThereIsNoGame.png", path: "thereisnogame/" },
+{ name: "Tiny Cars", image: "Images/TinyCars.png", path: "tinycars/" },
+{ name: "Tiny Fishing", image: "Images/TinyFishing.png", path: "tinyfishing/" },
+{ name: "Unicycle Hero", image: "Images/UnicycleHero.png", path: "unicyclehero/" },
+{ name: "Wolfenstein 3D", image: "Images/Wolfenstein3D.png", path: "wolfenstein3d/" },
+{ name: "Idle Ants", image: "Images/IdleAnts.png", path: "idleants/" },
+{ name: "Idle Breakout", image: "Images/IdleBreakout.png", path: "idlebreakout/" },
+{ name: "Idle Dice", image: "Images/IdleDice.png", path: "idledice/" },
+{ name: "Mari0", image: "Images/Mari0.png", path: "mari0/" },
+{ name: "MotoX3M", image: "Images/MotoX3M.png", path: "motox3m/" },
+{ name: "OvO", image: "Images/OvO.png", path: "ovo/" },
+{ name: "Race Survival", image: "Images/RaceSurvival.png", path: "racesurvival/" },
+{ name: "Recoil", image: "Images/Recoil.png", path: "recoil/" },
+{ name: "RRGGBB", image: "Images/RRGGBB.png", path: "rrggbb/" },
+{ name: "Resizer", image: "Images/Resizer.png", path: "resizer/" },
+{ name: "Polytrack", image: "Images/Polytrack.png", path: "polytrack/" },
+{ name: "Googlefeud", image: "Images/Googlefeud.png", path: "googlefeud/" },
+{ name: "Let's Surf", image: "Images/Letssurf.png", path: "letssurf/" },
+{ name: "Minecraft 1.5.2", image: "Images/Minecraft1.5.2.png", path: "AWeb/" },
+{ name: "Minecraft 1.8.8", image: "Images/Minecraft1.8.8.png", path: "minecraft18/" },
+{ name: "Monster Tracks", image: "Images/Monstertracks.png", path: "monstertracks/" },
+{ name: "MotoX3M 2", image: "Images/MotoX3M2.png", path: "motox3m2/" },
+{ name: "Grind Craft", image: "Images/GrindCraft.png", path: "grindcraft/" },
+{ name: "Pacman", image: "Images/Pacman.png", path: "pacman/" },
+{ name: "Plants Vs. Zombies", image: "Images/PVZ.png", path: "plantsvszombies/" },
+{ name: "Pool", image: "Images/Pool.png", path: "pool/" },
+{ name: "Minecraft Tower Defense", image: "Images/mctd.png", path: "mctd/" },
+{ name: "Minecraft Tower Defense 2", image: "Images/mctd2.jpg", path: "mctd2/" },
+{ name: "Draw The Hill", image: "Images/DrawTheHill.png", path: "draw-the-hill/" },
+{ name: "Five Nights at Freddy's", image: "Images/Fnaf.png", path: "FNAF1/index.html" },
+{ name: "Five Nights at Freddy's 3", image: "Images/Fnaf3.png", path: "FNAF3/index.html" },
+{ name: "Kitchen Gun", image: "Images/KitchenGun.png", path: "kitchen-gun-game/" },
+{ name: "Noob Steve Parkour", image: "Images/NoobSteveParkour.png", path: "noob-steve-parkour/" },
+{ name: "Polybranch", image: "Images/Polybranch.png", path: "polybranch/" },
+{ name: "Popcat", image: "Images/Popcat.png", path: "popcat-classic/" },
+{ name: "Push Your Luck", image: "Images/PushYourLuck.png", path: "push-your-luck/" },
+{ name: "The Heist", image: "Images/TheHeist.png", path: "theheist/" },
+{ name: "Tomb Of The Mask", image: "Images/TombOfTheMask.png", path: "tomb/" },
+{ name: "Mine Sweeper", image: "Images/MineSweepers.png", path: "minesweeper/" },
+{ name: "99 Balls", image: "Images/99BallsEvo.png", path: "99balls/" },
+{ name: "Angry Birds Slingshot Frenzy", image: "Images/AngryBirdsSlingshotFrenzy.png", path: "AngryBirds/" },
+{ name: "HexGL Master", image: "Images/HexGL.png", path: "HexGL-master/" },
+{ name: "Adventure Drivers", image: "Images/AdventureDrivers.png", path: "adventure-drivers/" },
+{ name: "Amazing Strange Rope Police", image: "Images/AmazingStrangeRopePolice.png", path: "amazing-rope-police/" },
+{ name: "Angry Sharks", image: "Images/AngrySharks.png", path: "angry-sharks/" },
+{ name: "The Backrooms 2D", image: "Images/TheBackrooms2D.png", path: "backrooms-2d/" },
+{ name: "Champion Island", image: "Images/GoogleChampionIsland.png", path: "champion-island/" },
+{ name: "Cut The Rope Holiday Gift", image: "Images/CutTheRopeHolidayGift.png", path: "ctr-holiday/" },
+{ name: "Connect 3", image: "Images/Connect3.png", path: "connect3/" },
+{ name: "Cut The Rope Time Travel", image: "Images/CutTheRopeTimeTravel.png", path: "ctr-tr/" },
+{ name: "MotoX3M Pool Party", image: "Images/MotoX3M3.png", path: "motox3m-pool/" },
+{ name: "MotoX3M Spooky Land", image: "Images/MotoX3M5.png", path: "motox3m-spooky/" },
+{ name: "Moto X3M Winter", image: "Images/MotoX3M4.png", path: "motox3m-winter/" },
+{ name: "Station 141", image: "Images/Station141.png", path: "station-141/" },
+{ name: "Stickman Hook", image: "Images/StickmanHook.png", path: "stickman-hook/" },
+{ name: "Tank Trouble 2", image: "Images/TankTrouble2.png", path: "tank-trouble-2/" },
+{ name: "Time Shooter 2", image: "Images/TimeShooter2.png", path: "time-shooter-2/" },
+{ name: "4 Colors Multiplayer", image: "Images/4ColorsMultiplayer.png", path: "uno/" },
+{ name: "The Bowling Club", image: "Images/TheBowlingClub.png", path: "thebowlingclub/" },
+{ name: "Madalin Stunt Cars 2", image: "Images/MadalinStuntCars2.png", path: "stuntcars/" },
+{ name: "Tanuki Sunset", image: "Images/TankuSunset.png", path: "TANUKISUNSET/" },
+{ name: "Music Ball", image: "Images/MusicBall.png", path: "MUSICBALL/" },
+{ name: "Marble Race Creator", image: "Images/MarbleRaceCreator.png", path: "MARBLERACEMAKER/" },
+{ name: "Hard Golf", image: "Images/HardGolf.png", path: "HARDGOLF/" },
+{ name: "Bongo Cat", image: "Images/BongoCat.png", path: "BANGOCAT/" },
+{ name: "CYBER TUNNEL", image: "Images/CyberTunnelEscape.png", path: "CYBERTUNNEL/" },
+{ name: "Friday Night Funkin' Atsuover", image: "Images/FNFAtsuover.png", path: "ann/" },
+{ name: "Friday Night Funkin' B Sides", image: "Images/FNFBSides.png", path: "bsides/" },
+{ name: "Friday Night Funkin' Deep Sea Date", image: "Images/FNFDeepSeaDate.png", path: "deepseadate/" },
+{ name: "Friday Night Funkin' Everywhere At The End Of Funk", image: "Images/FNFEATEOF.png", path: "everywhereattheendoffunk/" },
+{ name: "Friday Night Funkin' FlipSide", image: "Images/FNFFlipSide.png", path: "flipside/" },
+{ name: "Friday Night Funkin' Hell Beats", image: "Images/FNFHellBeats.png", path: "h3llbeats/" },
+{ name: "Friday Night Funkin' Henry Stickmin", image: "Images/FNFHenryStickmin.png", path: "henry/" },
+{ name: "Friday Night Funkin' Hex", image: "Images/FNFHex.png", path: "hex/" },
+{ name: "Friday Night Funkin' Kapi", image: "Images/FNFKapi.png", path: "kapi/" },
+{ name: "Friday Night Funkin' Shaggy X Matt", image: "Images/FNFShaggyXMatt.png", path: "shaggymatt/" },
+{ name: "Friday Night Funkin' Miku", image: "Images/FNFMiku.png", path: "Miku/" },
+{ name: "Friday Night Funkin' Matt", image: "Images/FNFMatt.png", path: "matt/" },
+{ name: "Friday Night Funkin' Minus", image: "Images/FNFMinus.png", path: "minus/" },
+{ name: "Friday Night Funkin' Monika", image: "Images/FNFMonika.png", path: "monika/" },
+{ name: "Friday Night Funkin' Neo", image: "Images/FNFNeo.png", path: "neo/" },
+{ name: "Friday Night Funkin' Rose Criminal", image: "Images/FNFRoseCriminal.png", path: "rosecriminal/" },
+{ name: "Friday Night Funkin' Xe", image: "Images/FNFXe.png", path: "XE/" },
+{ name: "Stick Defenders", image: "Images/StickDefenders.png", path: "stickdefenders/" },
+{ name: "Jelly Truck", image: "Images/JellyTruck.png", path: "jellytruck/" },
+{ name: "1v1 lol", image: "Images/1v1Lol.png", path: "1v1-lol/" },
+{ name: "Bloxorz", image: "Images/Bloxorz.png", path: "bloxors/" },
+{ name: "Ballistic Chickens", image: "Images/BallisticChickens.png", path: "ballistic-chickens/" },
+{ name: "Dadish", image: "Images/Dadish.png", path: "dadish/" },
+{ name: "Dadish 2", image: "Images/Dadish2.png", path: "dadish-2/" },
+{ name: "Death Run 3D", image: "Images/DeathRun3D.png", path: "deathrun/" },
+{ name: "Death Soul", image: "Images/DeathSoul.png", path: "deathsoul/" },
+{ name: "Doge 2048", image: "Images/Doge2048.png", path: "doge2048/" },
+{ name: "Duck Life", image: "Images/DuckLife.png", path: "duck-life/" },
+{ name: "Duck Life 2", image: "Images/DuckLife2.png", path: "duck-life-2/" },
+{ name: "Duck Life 3", image: "Images/DuckLife3.png", path: "duck-life-3/" },
+{ name: "Duck Life 4", image: "Images/DuckLife4.png", path: "duck-life-4/" },
+{ name: "Earn To Die 2012", image: "Images/EarnToDie2012.png", path: "earn-to-die/" },
+{ name: "Eat Small Fishes", image: "Images/EatSmallFishes.png", path: "eat-small-fishes/" },
+{ name: "WebGL Fluid Simulation", image: "Images/WebGLFluidSimulation.png", path: "fluid-simulator/" },
+{ name: "Basket Random", image: "Images/BasketRandom.png", path: "basket-random/" },
+{ name: "Bejeweled", image: "Images/Bejeweled.png", path: "bejeweled/" },
+{ name: "Breaking The Bank", image: "Images/BreakingTheBank.png", path: "breakingthebank/" },
+{ name: "Cannon Basketball 4", image: "Images/CannonBasketball4.png", path: "cannon-basketball-4/" },
+{ name: "Contre Jour", image: "Images/ContreJour.png", path: "ContreJour/" },
+{ name: "DOOMORI", image: "Images/Doomori.png", path: "DOOMORI/" },
+{ name: "Flappy Zig Zag", image: "Images/FlappyZigZag.png", path: "Flappy-ZigZag/" },
+{ name: "Gons.io", image: "Images/Gons.io.png", path: "gons/" },
+{ name: "House Of Hazards", image: "Images/HouseOfHazards.png", path: "houseofhazards/" },
+{ name: "Idle Merge Car And Race", image: "Images/IdleMergeCarAndRace.png", path: "idle-merge-car-and-race/" },
+{ name: "Just Fall LOL", image: "Images/JustFallLol.png", path: "justfall/" },
+{ name: "JustOneBoss", image: "Images/JustOneBoss.png", path: "justoneboss/" },
+{ name: "Mini Battle City", image: "Images/MiniBattleCity.png", path: "BattleCityMini/" },
+{ name: "The Impossible Quiz", image: "Images/TheImpossibleQuiz.png", path: "impossiblequiz/" },
+{ name: "Fireboy and Watergirl 1: Forest Temple", image: "Images/FireBoyWaterGirl1.jpg", path: "FBWG1" }
+];
+
+
+const featuredGame = games[23];
+
+const gamesContainer = document.getElementById("gamesContainer");
+const searchInput = document.getElementById("search");
+const gameView = document.getElementById("game-view");
+const gameFrame = document.getElementById("game-frame");
+const gameTitle = document.getElementById("gameTitle");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const topBar = document.querySelector(".top-bar");
+
+document.getElementById("featuredContainer").style.backgroundImage = `url('${featuredGame.image}')`;
+document.getElementById("featuredTitle").textContent = featuredGame.name;
+
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+let currentView = "all";
+
+function renderGames(list) {
+  list.sort((a, b) => a.name.localeCompare(b.name));
+  gamesContainer.innerHTML = "";
+  list.forEach(game => {
+    const div = document.createElement("div");
+    div.className = "game";
+    div.style.backgroundImage = `url('${game.image}')`;
+    div.onclick = () => openGame(game);
+    const favBtn = document.createElement("button");
+    favBtn.className = "favorite-btn";
+    favBtn.innerHTML = "★";
+    if (favorites.some(f => f.name === game.name)) {
+      favBtn.classList.add("favorited");
+    }
+    favBtn.onclick = e => {
+      e.stopPropagation();
+      toggleFavorite(game, favBtn);
+    };
+    div.appendChild(favBtn);
+    gamesContainer.appendChild(div);
+  });
+}
+
+function toggleFavorite(game, btn) {
+  const index = favorites.findIndex(f => f.name === game.name);
+  const isFavoriting = index === -1;
+  if (isFavoriting) {
+    favorites.push(game);
+  } else {
+    favorites.splice(index, 1);
+  }
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  if (isFavoriting) {
+    btn.classList.add("favorited");
+    btn.style.animation = "pop 0.3s ease forwards";
+    btn.addEventListener("animationend", () => {
+      btn.style.animation = "";
+    }, { once: true });
+  } else {
+    btn.classList.remove("favorited");
+  }
+  if (currentView === "favorites") {
+    showFavorites();
+  }
+}
+
+function showAllGames() {
+  currentView = "all";
+  renderGames(games);
+}
+
+function showFavorites() {
+  currentView = "favorites";
+  renderGames(favorites);
+}
+
+async function openGame(game) {
+  if (game.link) {
+    launchGame(game.link, game.name);
+    return;
+  }
+  const activeBases = Object.values(BASE_URLS).filter(base => base.active).map(base => base.url);
+  for (const base of activeBases) {
+    const fullUrl = base + game.path;
+    try {
+      const response = await fetch(fullUrl, { method: 'HEAD' });
+      if (response.ok) {
+        launchGame(fullUrl, game.name);
+        return;
+      }
+    } catch (e) {}
+  }
+  alert(`Could not load "${game.name}"`);
+}
+
+function launchGame(url, title) {
+  gameFrame.src = url;
+  gameTitle.textContent = title;
+  gameView.style.display = "flex";
+}
+
+function closeGame() {
+  gameView.style.display = "none";
+  gameFrame.src = "";
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+  fullscreenBtn.innerText = "⛶";
+  topBar.style.visibility = "visible";
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    gameFrame.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+document.addEventListener("fullscreenchange", () => {
+  const isFullscreen = document.fullscreenElement === gameFrame;
+  fullscreenBtn.innerText = isFullscreen ? "🡽" : "⛶";
+  topBar.style.visibility = isFullscreen ? "hidden" : "visible";
+  fullscreenBtn.style.visibility = "visible";
+  fullscreenBtn.style.position = isFullscreen ? "fixed" : "initial";
+  fullscreenBtn.nextElementSibling.style.visibility = "visible";
+});
+
+searchInput.addEventListener("input", () => {
+  const term = searchInput.value.toLowerCase();
+  if (currentView === "favorites") {
+    renderGames(favorites.filter(g => g.name.toLowerCase().includes(term)));
+  } else {
+    renderGames(games.filter(g => g.name.toLowerCase().includes(term)));
+  }
+});
+
+function initPage() {
+  showAllGames();
+  setTimeout(() => {
+    document.getElementById("loading-screen").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+  }, 2200);
+}
+</script>
+</body>
+</html>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Agic</title>
