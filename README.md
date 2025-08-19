@@ -13,7 +13,7 @@
 
 ### ⚡ What is Agic?
 
-**Agic** is a fast and reliable gaming site known for **never being blocked**. It checks multiple repositories for games, and links are updated frequently.  
+**Agic** is a fast and reliable gaming site known for **never being blocked**. It checks multiple repositories for games, and links will always work,  
 And the entire site is built using **100% pure HTML**.
 
 ---
